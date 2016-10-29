@@ -5,7 +5,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import stylelint from 'stylelint';
 import precss from 'precss';
-import basscss from 'postcss-basscss';
 import autoprefixer from 'autoprefixer';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
@@ -15,7 +14,7 @@ export const cssModuleNames = '[name]__[local]___[hash:base64:5]';
 
 function getCssLoaders() {
   const cssLoaderConfig = [
-    'css?modules',
+    'css?modules&camelcase',
     'importLoaders=1',
     `localIdentName=${cssModuleNames}`,
   ].join('&');
@@ -182,13 +181,12 @@ const webpackConfig = buildConfig({
       },
     }),
     new webpack.ResolverPlugin(
-      new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("package.json", ["style"])
+      new webpack.ResolverPlugin.FileAppendPlugin(['/index.css'])
     ),
   ],
   postcss: () => [
     stylelint,
     autoprefixer({ browsers: ['> 0.5% in NL'] }),
-    basscss,
     precss,
   ],
   devServer: {

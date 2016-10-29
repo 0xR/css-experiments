@@ -1,14 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import styles from './Dropdown.css';
+import Dropdown from './Dropdown';
 
-const Dropdown = () => (
-  <div className={styles.container}>
-    <div>Hamburger</div>
-  </div>
-);
 storiesOf('Dropdown', module)
-  .add('Default', () => (
+  .add('Collapsed', () => (
     <Dropdown />
+  ))
+  .add('Expanded', () => (
+    <Dropdown expanded />
   ));
 

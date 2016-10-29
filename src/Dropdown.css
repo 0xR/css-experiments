@@ -1,3 +1,14 @@
 .container {
   composes: relative from 'basscss-position';
 }
+
+.dropdown {
+  composes: absolute from 'basscss-position';
+  composes: rounded from 'basscss-border';
+  composes: border from 'basscss-border';
+}
+
+.action {
+  composes: block from 'basscss-layout';
+  composes: p1 from 'basscss-padding';
+}
