@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import stylelint from 'stylelint';
 import precss from 'precss';
+import basscss from 'postcss-basscss';
 import autoprefixer from 'autoprefixer';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
@@ -57,6 +58,9 @@ function productionBuild(base) {
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
     ],
+    resolve: {
+      extensions: ['', '.js', '.jsx','.css'],
+    },
   });
 }
 
@@ -177,10 +181,14 @@ const webpackConfig = buildConfig({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
+    new webpack.ResolverPlugin(
+      new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("package.json", ["style"])
+    ),
   ],
   postcss: () => [
     stylelint,
     autoprefixer({ browsers: ['> 0.5% in NL'] }),
+    basscss,
     precss,
   ],
   devServer: {
