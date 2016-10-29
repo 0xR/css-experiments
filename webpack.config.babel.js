@@ -118,7 +118,7 @@ function buildConfig(base) {
   const production = process.env.NODE_ENV === 'production';
   const target = process.env.npm_lifecycle_event;
 
-  if (production && target !== 'reactcards') {
+  if (production) {
     return productionBuild(base);
   }
 
