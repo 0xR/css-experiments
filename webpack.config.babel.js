@@ -86,18 +86,23 @@ function unitTestConfig(base) {
   });
 }
 
-function addHotLoaderConfig(base) {
+function addStyleLoader(base) {
   return merge.smart(base, {
-    entry: [
-      'webpack-dev-server/client?http://0.0.0.0:8080',
-      'webpack/hot/only-dev-server',
-      './src/index.jsx',
-    ],
     module: {
       loaders: [
         { test: /\.css$/, loaders: ['style'] },
       ],
     },
+  });
+}
+
+function addHotLoaderConfig(base) {
+  return merge(base, {
+    entry: [
+      'webpack-dev-server/client?http://0.0.0.0:8080',
+      'webpack/hot/only-dev-server',
+      './src/index.jsx',
+    ],
     plugins: [
       ...base.plugins,
       new webpack.HotModuleReplacementPlugin(),
@@ -114,7 +119,7 @@ function startConfig(base) {
   });
 }
 
-function buildConfig(base) {
+function addLoadersPlugins(base) {
   const production = process.env.NODE_ENV === 'production';
   const target = process.env.npm_lifecycle_event;
 
@@ -127,19 +132,39 @@ function buildConfig(base) {
     return unitTestConfig(withCssLoaders);
   }
 
-  const withHotLoaderConfig = addHotLoaderConfig(withCssLoaders);
-  if (target === 'start') {
-    return startConfig(withHotLoaderConfig);
+  const withStyleLoader = addStyleLoader(withCssLoaders);
+  if (target !== 'storybook') {
+    const withHotLoaderConfig = addHotLoaderConfig(withStyleLoader);
+    if (target === 'start') {
+      return startConfig(withHotLoaderConfig);
+    }
+    return withHotLoaderConfig;
   }
 
-  return withHotLoaderConfig;
+  return withStyleLoader;
+}
+
+function addOutput(base) {
+  const target = process.env.npm_lifecycle_event;
+  if (target !== 'storybook') {
+    return merge(base, {
+      output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.[hash:8].js',
+      },
+    });
+  }
+  return base;
+}
+
+function buildConfig(base) {
+  return [addOutput, addLoadersPlugins].reduce(
+    (config, builder) => builder(config),
+    base
+  );
 }
 
 const webpackConfig = buildConfig({
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[hash:8].js',
-  },
   module: {
     loaders: [
       { test: /\.jsx?$/, exclude: /node_modules/, loaders: ['babel'] },
@@ -158,6 +183,9 @@ const webpackConfig = buildConfig({
     autoprefixer({ browsers: ['> 0.5% in NL'] }),
     precss,
   ],
+  devServer: {
+    stats: 'errors-only',
+  },
 });
 
 // console.log(JSON.stringify(webpackConfig, null, 2));

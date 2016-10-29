@@ -13,7 +13,7 @@ NodePathReplacePlugin.prototype.apply = function NodePathReplacePluginApply(comp
     });
   }
 
-  setModuleConstant('__filename', (module) => module.resource);
+  setModuleConstant('__filename', module => module.resource);
 
-  setModuleConstant('__dirname', (module) => module.context);
+  setModuleConstant('__dirname', module => module.context);
 };

@@ -11,7 +11,7 @@
     "test:watch": "npm run test -- --watch",
     "lint": "eslint --cache --fix '**/*.js' '**/*.jsx'",
     "lint:watch": "nodemon -w . -e js,jsx --exec npm run lint",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "nodemon -w webpack.config.babel.js --exec start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "keywords": [],

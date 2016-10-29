@@ -6,7 +6,7 @@ import ExtractImports from 'postcss-modules-extract-imports';
 import Scope from 'postcss-modules-scope';
 import ExtractExports from 'postcss-modules-extract-exports';
 import genericNames from 'generic-names';
-import { cssModuleNames } from '../webpack.config.babel.js';
+import { cssModuleNames } from '../webpack.config.babel';
 
 const rootDir = path.resolve(__dirname, '..');
 

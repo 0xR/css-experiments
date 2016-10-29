@@ -1,2 +1,2 @@
 require('babel-core/register');
-module.exports = require('./preprocessor.babel.js');
+module.exports = require('./preprocessor.babel');
