@@ -10,7 +10,9 @@
     "test": "jest --config jest.json",
     "test:watch": "npm run test -- --watch",
     "lint": "eslint --cache --fix '**/*.js' '**/*.jsx'",
-    "lint:watch": "nodemon -w . -e js,jsx --exec npm run lint"
+    "lint:watch": "nodemon -w . -e js,jsx --exec npm run lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [],
   "author": "",
@@ -60,7 +62,8 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.0",
     "webpack-merge": "^0.14.1",
-    "webpack-validator": "^2.2.7"
+    "webpack-validator": "^2.2.7",
+    "@kadira/storybook": "^2.21.0"
   },
   "dependencies": {
     "babel-preset-es2015": "^6.14.0",
