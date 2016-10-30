@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import stylelint from 'stylelint';
 import precss from 'precss';
-import autoprefixer from 'autoprefixer';
+import postcssImport from 'postcss-import';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
 import NodePathReplacePlugin from './NodePathReplacePlugin.js';
@@ -58,7 +58,7 @@ function productionBuild(base) {
       new webpack.optimize.OccurenceOrderPlugin(),
     ],
     resolve: {
-      extensions: ['', '.js', '.jsx','.css'],
+      extensions: ['', '.js', '.jsx'],
     },
   });
 }
@@ -184,9 +184,11 @@ const webpackConfig = buildConfig({
       new webpack.ResolverPlugin.FileAppendPlugin(['/index.css'])
     ),
   ],
-  postcss: () => [
+  postcss: (webpackEnv) => [
     stylelint,
-    autoprefixer({ browsers: ['> 0.5% in NL'] }),
+    postcssImport({
+      addDependencyTo: webpackEnv,
+    }),
     precss,
   ],
   devServer: {
@@ -194,6 +196,6 @@ const webpackConfig = buildConfig({
   },
 });
 
-// console.log(JSON.stringify(webpackConfig, null, 2));
+console.log(JSON.stringify(webpackConfig, null, 2));
 
 export default validate(webpackConfig);

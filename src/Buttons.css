@@ -1,0 +1,13 @@
+@import './colors.css';
+
+.button {
+  composes: btn from 'basscss-btn';
+}
+
+.primary {
+  composes: button;
+  composes: btn-primary from 'basscss-btn-primary';
+  composes: white-color from './colors.css';
+  color: $light-text;
+  background-color: $blue;
+}

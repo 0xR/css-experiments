@@ -3,9 +3,9 @@
 }
 
 .dropdown {
-  composes: absolute from 'basscss-position';
   composes: rounded from 'basscss-border';
   composes: border from 'basscss-border';
+  composes: fit from 'basscss-layout';
 }
 
 .action {

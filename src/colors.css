@@ -1,4 +1,5 @@
 $blue: #056ef0;
+$light-text: white;
 
 .font-color {
   color: $blue;

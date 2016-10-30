@@ -1,12 +1,17 @@
 import React from 'react';
+import styles from './Buttons.css';
 import cn from 'classnames';
-import styles from 'basscss-btn';
-import primaryStyles from 'basscss-btn-primary';
 
-const makeButton = (defaultClassname) => ({ children, className, ...rest }) => (
-  <button className={cn(styles.btn, defaultClassname, className)} {...rest}>{children}</button>
-)
+function makeComponentWithDefaultClassname(tag, defaultClassName) {
+  return ({ className, ...rest }) => React.createElement(tag, {
+    className: cn(defaultClassName, className),
+    ...rest
+  });
+}
 
-export const Button = makeButton();
+function makeButton(className) {
+  return makeComponentWithDefaultClassname('button', className);
+}
+export const Button = makeButton(styles['button']);
 
-export const PrimaryButton = makeButton(primaryStyles.btnPrimary);
+export const PrimaryButton = makeButton(styles['primary']);
